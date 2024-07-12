@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+package mmo;
+
+message Vector {
+  int32 x = 1;
+  int32 y = 2;
+  int32 z = 3;
+}
+
+message Motion {
+  string    mapName  = 1;
+  Vector position = 2;
+  Vector rotation = 3;
+  Vector velocity = 4;
+}
+
+message Character {
+  string id = 1;
+  string instanceId = 2;
+  string mapId = 3;
+  Motion motion = 4;
+}
+
+
+enum GameMessageTypeE {
+  GAME_MESSAGE_PLAYER_LOAD = 0;
+}
+
+
+/*
+{
+    "header": {
+        "messageType": "PLAYER_ACTION",      // Type of the message (e.g., login, move, attack)
+        "timestamp": 1629478451000,          // Unix timestamp of when the message was sent
+        "playerID": "player12345",           // Unique identifier for the player
+        "sessionID": "session67890"          // Session identifier to maintain context
+    },
+    "body": {
+        "actionType": "MOVE",                // Type of action the player is taking
+        "coordinates": {
+            "x": 345,
+            "y": 678,
+            "z": 12
+        },                                   // New coordinates where the player wants to move
+        "direction": "NORTH",                // Direction of the movement
+        "speed": 5                           // Speed of movement
+    },
+    "authentication": {
+        "token": "authToken12345"            // Token for authenticating the request
+    }
+}
+
+
+ */
+
+message GameMessage {
+  GameMessageTypeE type = 1;
+  uint32 timestamp      = 2;
+  string player_id      = 3;
+  string session_id     = 4;
+}
+
+message WorldState {}
